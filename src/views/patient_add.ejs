@@ -1,0 +1,81 @@
+<%- include('partials/_header'); -%>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Add New Patient</h2>
+            <a href="/patients" class="btn btn-secondary mb-3">Back to Patients</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/patients/add" method="post">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" placeholder="Patient Name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" name="age" placeholder="Age" class="form-control" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender">Gender</label>
+                            <select name="gender" class="form-control" required>
+                                <option value="">-- Select Gender --</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="doctor_id">Doctor</label>
+                            <select name="doctor_id" class="form-control" required>
+                                <option value="">-- Select Doctor --</option>
+                                <% if (doctors) { %>
+                                    <% for (var i = 0; i < doctors.length; i++) { %>
+                                        <option value="<%= doctors[i].doctor_id %>">
+                                            <%= doctors[i].name %> (<%= doctors[i].specialization %>)
+                                        </option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nurse_id">Nurse</label>
+                            <select name="nurse_id" class="form-control" required>
+                                <option value="">-- Select Nurse --</option>
+                                <% if (nurses) { %>
+                                    <% for (var i = 0; i < nurses.length; i++) { %>
+                                        <option value="<%= nurses[i].nurse_id %>">
+                                            <%= nurses[i].name %>
+                                        </option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="lab_id">Laboratory</label>
+                            <select name="lab_id" class="form-control" required>
+                                <option value="">-- Select Laboratory --</option>
+                                <% if (labs) { %>
+                                    <% for (var i = 0; i < labs.length; i++) { %>
+                                        <option value="<%= labs[i].lab_id %>">
+                                            <%= labs[i].lab_name %> (Technician: <%= labs[i].technician %>)
+                                        </option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Save Patient
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer'); -%>

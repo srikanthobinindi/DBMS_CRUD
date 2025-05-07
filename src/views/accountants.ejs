@@ -1,0 +1,53 @@
+<%- include('partials/_header'); -%>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h2>Accountant Management</h2>
+            <a href="/" class="btn btn-secondary mb-3">Back to Home</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Admin</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (data) { %>
+                        <% for (var i = 0; i < data.length; i++) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= data[i].name %></td>
+                                <td><%= data[i].email %></td>
+                                <td><%= data[i].phone %></td>
+                                <td><%= data[i].admin_name || 'None' %></td>
+                                <td>
+                                    <a href="/accountants/delete/<%= data[i].accountant_id %>" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="/accountants/update/<%= data[i].accountant_id %>" class="btn btn-info btn-sm">Update</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Add New Accountant</h3>
+                    <a href="/accountants/add" class="btn btn-primary mb-3">Add New Accountant</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer'); -%>

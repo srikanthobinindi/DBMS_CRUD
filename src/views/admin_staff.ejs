@@ -1,0 +1,181 @@
+<%- include('partials/_header'); -%>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Staff Managed by <%= admin_name %></h2>
+            <a href="/admins" class="btn btn-secondary mb-3">Back to Admins</a>
+        </div>
+    </div>
+
+    <!-- Doctors Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Doctors</h3>
+            <% if (doctors && doctors.length > 0) { %>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Specialization</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i < doctors.length; i++) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= doctors[i].name %></td>
+                                <td><%= doctors[i].specialization %></td>
+                                <td><%= doctors[i].email %></td>
+                                <td><%= doctors[i].phone %></td>
+                                <td>
+                                    <a href="/doctors/patients/<%= doctors[i].doctor_id %>" class="btn btn-success btn-sm">View Patients</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No doctors assigned to this admin.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Nurses Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Nurses</h3>
+            <% if (nurses && nurses.length > 0) { %>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i < nurses.length; i++) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= nurses[i].name %></td>
+                                <td><%= nurses[i].email %></td>
+                                <td><%= nurses[i].phone %></td>
+                                <td>
+                                    <a href="/nurses/patients/<%= nurses[i].nurse_id %>" class="btn btn-success btn-sm">View Patients</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No nurses assigned to this admin.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Labs Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Laboratories</h3>
+            <% if (labs && labs.length > 0) { %>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Lab Name</th>
+                            <th>Technician</th>
+                            <th>Email</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i < labs.length; i++) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= labs[i].lab_name %></td>
+                                <td><%= labs[i].technician %></td>
+                                <td><%= labs[i].email %></td>
+                                <td>
+                                    <a href="/laboratories/patients/<%= labs[i].lab_id %>" class="btn btn-success btn-sm">View Patients</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No laboratories assigned to this admin.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Pharmacists Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Pharmacists</h3>
+            <% if (pharmacists && pharmacists.length > 0) { %>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i < pharmacists.length; i++) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= pharmacists[i].name %></td>
+                                <td><%= pharmacists[i].email %></td>
+                                <td><%= pharmacists[i].phone %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No pharmacists assigned to this admin.</p>
+            <% } %>
+        </div>
+    </div>
+
+    <!-- Accountants Section -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h3>Accountants</h3>
+            <% if (accountants && accountants.length > 0) { %>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% for (var i = 0; i < accountants.length; i++) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= accountants[i].name %></td>
+                                <td><%= accountants[i].email %></td>
+                                <td><%= accountants[i].phone %></td>
+                            </tr>
+                        <% } %>
+                    </tbody>
+                </table>
+            <% } else { %>
+                <p>No accountants assigned to this admin.</p>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer'); -%>

@@ -1,0 +1,319 @@
+ 6.  VIEWS                ####################################################################### 
+ 
+                 
+1. View:         view_patient_details 
+Shows full patient info along with assigned doctor, nurse, and lab. 
+ 
+ 
+CREATE VIEW view_patient_details AS 
+SELECT  
+p.patient_id, 
+p.name AS patient_name, 
+p.age, 
+p.gender, 
+d.name AS doctor_name, 
+d.specialization, 
+n.name AS nurse_name, 
+l.lab_name, 
+l.technician AS lab_technician 
+FROM  
+patient p 
+JOIN doctor d ON p.doctor_id = d.doctor_id 
+JOIN nurse n ON p.nurse_id = n.nurse_id 
+JOIN laboratory l ON p.lab_id = l.lab_id; 
+
+
+
+
+
+
+2. View:         
+view_admin_overview 
+Lists each admin and the number of doctors, nurses, labs, pharmacists, and 
+accountants they manage. 
+
+
+CREATE VIEW view_admin_overview AS 
+SELECT  
+a.admin_id, 
+a.name AS admin_name, 
+COUNT(DISTINCT d.doctor_id) AS doctor_count, 
+COUNT(DISTINCT n.nurse_id) AS nurse_count, 
+COUNT(DISTINCT l.lab_id) AS lab_count, 
+COUNT(DISTINCT p.pharmacist_id) AS pharmacist_count, 
+COUNT(DISTINCT ac.accountant_id) AS accountant_count 
+FROM  
+admin a 
+LEFT JOIN doctor d ON a.admin_id = d.admin_id 
+LEFT JOIN nurse n ON a.admin_id = n.admin_id 
+LEFT JOIN laboratory l ON a.admin_id = l.admin_id 
+LEFT JOIN pharmacist p ON a.admin_id = p.admin_id 
+LEFT JOIN accountant ac ON a.admin_id = ac.admin_id 
+GROUP BY  
+a.admin_id, a.name; 
+
+
+
+
+
+3. View:           
+view_doctor_patients 
+Shows doctors and their assigned patients. 
+
+
+
+CREATE VIEW view_doctor_patients AS 
+SELECT  
+d.doctor_id, 
+d.name AS doctor_name, 
+d.specialization, 
+p.patient_id, 
+p.name AS patient_name, 
+p.age, 
+p.gender 
+FROM  
+doctor d 
+JOIN patient p ON d.doctor_id = p.doctor_id; 
+
+
+
+
+
+
+
+4. View: view_lab_technicians 
+Shows labs and the patients associated with them. 
+sql 
+Copy 
+Edit 
+
+
+
+
+CREATE VIEW view_lab_technicians AS 
+SELECT  
+l.lab_id, 
+l.lab_name, 
+l.technician, 
+p.patient_id, 
+p.name AS patient_name 
+FROM  
+laboratory l 
+JOIN patient p ON l.lab_id = p.lab_id; 
+
+
+
+
+
+
+
+5. View: view_contact_directory 
+Gives a combined contact list of all roles in the system. 
+sql 
+Copy 
+Edit 
+
+
+
+
+
+CREATE VIEW view_contact_directory AS 
+SELECT 'Admin' AS role, admin_id AS id, name, phone, email FROM admin 
+UNION 
+SELECT 'Doctor', doctor_id, name, phone, email FROM doctor 
+UNION 
+SELECT 'Nurse', nurse_id, name, phone, email FROM nurse 
+UNION 
+SELECT 'Lab', lab_id, lab_name, NULL AS phone, email FROM laboratory 
+UNION 
+SELECT 'Pharmacist', pharmacist_id, name, phone, email FROM pharmacist 
+UNION 
+SELECT 'Accountant', accountant_id, name, phone, email FROM accountant; 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                 7. stored procedures                    ###################################################
+ 
+ 
+ 
+1. Stored Procedure:             AddNewPatient 
+This procedure adds a new patient and assigns them to a specific doctor, nurse, and 
+lab. 
+ 
+
+
+
+DELIMITER // 
+ 
+CREATE PROCEDURE AddNewPatient ( 
+    IN p_name VARCHAR(100), 
+    IN p_age INT, 
+    IN p_gender VARCHAR(10), 
+    IN p_doctor_id INT, 
+    IN p_nurse_id INT, 
+    IN p_lab_id INT 
+) 
+BEGIN 
+    INSERT INTO patient (name, age, gender, doctor_id, nurse_id, lab_id) 
+    VALUES (p_name, p_age, p_gender, p_doctor_id, p_nurse_id, p_lab_id); 
+END // 
+ 
+DELIMITER ; 
+ 
+ 
+Usage Example: 
+ 
+CALL AddNewPatient('John Doe', 35, 'Male', 1, 2, 1); 
+ 
+ 
+ 
+ 
+ 
+
+
+
+
+
+2. Stored Procedure:      GetDoctorPatientList 
+This procedure returns the list of patients assigned to a specific doctor. 
+ 
+
+DELIMITER // 
+ 
+CREATE PROCEDURE GetDoctorPatientList ( 
+    IN p_doctor_id INT 
+) 
+BEGIN 
+    SELECT  
+        p.patient_id, 
+        p.name AS patient_name, 
+        p.age, 
+        p.gender 
+    FROM  
+        patient p 
+WHERE  
+p.doctor_id = p_doctor_id; 
+END // 
+DELIMITER ; 
+
+
+Usage Example: 
+CALL GetDoctorPatientList(1); 
+
+
+
+
+
+
+ 
+8.  TRIGGERS                    ############################################################ 
+ 
+
+
+
+1. Trigger:        
+before_insert_patient_age_check 
+Purpose: Prevents inserting a patient with an invalid age (e.g., negative age). 
+
+
+
+DELIMITER // 
+CREATE TRIGGER before_insert_patient_age_check 
+BEFORE INSERT ON patient 
+FOR EACH ROW 
+BEGIN 
+IF NEW.age < 0 THEN 
+SIGNAL SQLSTATE '45000' 
+SET MESSAGE_TEXT = 'Age cannot be negative.'; 
+END IF; 
+END // 
+DELIMITER ; 
+
+
+
+This ensures your data stays clean by rejecting any invalid age input. 
+
+
+
+
+
+
+2. Trigger:           
+ after_insert_patient_log 
+Purpose: Logs whenever a new patient is added, useful for auditing. 
+First, create a log table: 
+sql 
+Copy 
+Edit 
+CREATE TABLE patient_log ( 
+log_id INT AUTO_INCREMENT PRIMARY KEY, 
+patient_id INT, 
+action VARCHAR(50), 
+timestamp DATETIME 
+); 
+Then create the trigger: 
+DELIMITER // 
+CREATE TRIGGER after_insert_patient_log 
+AFTER INSERT ON patient 
+FOR EACH ROW 
+BEGIN 
+INSERT INTO patient_log (patient_id, action, timestamp) 
+VALUES (NEW.patient_id, 'INSERT', NOW()); 
+END // 
+DELIMITER ; 
+
+
+
+This gives you a simple audit trail for patient registrations. 
+
+
+
+
+
+3. Trigger: before_delete_doctor_check_patients 
+Purpose: Prevents deletion of a doctor if they are still assigned to any patients. 
+
+
+
+DELIMITER // 
+CREATE TRIGGER before_delete_doctor_check_patients 
+BEFORE DELETE ON doctor 
+FOR EACH ROW 
+BEGIN 
+DECLARE patient_count INT; 
+SELECT COUNT(*) INTO patient_count 
+FROM patient 
+WHERE doctor_id = OLD.doctor_id; 
+IF patient_count > 0 THEN 
+SIGNAL SQLSTATE '45000' 
+SET MESSAGE_TEXT = 'Cannot delete doctor: assigned patients exist.'; 
+END IF; 
+END // 
+DELIMITER ; 
+This protects against accidentally removing a doctor who's still responsible for patients
+
+
+3. Trigger: before_delete_doctor_check_patients 
+Purpose: Prevents deletion of a doctor if they are still assigned to any patients. 
+
+
+
+DELIMITER // 
+CREATE TRIGGER before_delete_doctor_check_patients 
+BEFORE DELETE ON doctor 
+FOR EACH ROW 
+BEGIN 
+DECLARE patient_count INT; 
+SELECT COUNT(*) INTO patient_count 
+FROM patient 
+WHERE doctor_id = OLD.doctor_id; 
+IF patient_count > 0 THEN 
+SIGNAL SQLSTATE '45000' 
+SET MESSAGE_TEXT = 'Cannot delete doctor: assigned patients exist.'; 
+END IF; 
+END // 
+DELIMITER ; 
+

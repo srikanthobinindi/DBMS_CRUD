@@ -1,0 +1,107 @@
+<%- include('partials/_header'); -%>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h1>Health Management System Dashboard</h1>
+            <p class="lead">Welcome to the Health Management System. Use the links below to navigate to different sections.</p>
+        </div>
+    </div>
+
+    <div class="row mt-4">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Admin Management</h5>
+                    <p class="card-text">Manage administrators and view their assigned staff.</p>
+                    <a href="/admins" class="btn btn-primary">Go to Admins</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Doctor Management</h5>
+                    <p class="card-text">Manage doctors and view their assigned patients.</p>
+                    <a href="/doctors" class="btn btn-primary">Go to Doctors</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Nurse Management</h5>
+                    <p class="card-text">Manage nurses and view their assigned patients.</p>
+                    <a href="/nurses" class="btn btn-primary">Go to Nurses</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Patient Management</h5>
+                    <p class="card-text">Manage patients and their assignments to doctors, nurses, and labs.</p>
+                    <a href="/patients" class="btn btn-primary">Go to Patients</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Laboratory Management</h5>
+                    <p class="card-text">Manage laboratories and view their assigned patients.</p>
+                    <a href="/laboratories" class="btn btn-primary">Go to Laboratories</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Pharmacist Management</h5>
+                    <p class="card-text">Manage pharmacists in the system.</p>
+                    <a href="/pharmacists" class="btn btn-primary">Go to Pharmacists</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Accountant Management</h5>
+                    <p class="card-text">Manage accountants in the system.</p>
+                    <a href="/accountants" class="btn btn-primary">Go to Accountants</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Contact Directory</h5>
+                    <p class="card-text">View and search the complete contact directory.</p>
+                    <a href="/directory" class="btn btn-primary">Go to Directory</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Customer Management</h5>
+                    <p class="card-text">Manage customers in the system (legacy).</p>
+                    <a href="/customers" class="btn btn-secondary">Go to Customers</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include('partials/_footer'); -%>

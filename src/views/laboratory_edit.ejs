@@ -1,0 +1,54 @@
+<%- include('partials/_header'); -%>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Edit Laboratory</h2>
+            <a href="/laboratories" class="btn btn-secondary mb-3">Back to Laboratories</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/laboratories/update/<%= data.lab_id %>" method="post">
+                        <div class="form-group">
+                            <label for="lab_id">Laboratory ID</label>
+                            <input type="number" name="lab_id" value="<%= data.lab_id %>" class="form-control" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="lab_name">Laboratory Name</label>
+                            <input type="text" name="lab_name" value="<%= data.lab_name %>" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="technician">Technician</label>
+                            <input type="text" name="technician" value="<%= data.technician %>" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" value="<%= data.email %>" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin_id">Admin</label>
+                            <select name="admin_id" class="form-control">
+                                <option value="">-- Select Admin --</option>
+                                <% if (admins) { %>
+                                    <% for (var i = 0; i < admins.length; i++) { %>
+                                        <option value="<%= admins[i].admin_id %>" <%= (data.admin_id == admins[i].admin_id) ? 'selected' : '' %>>
+                                            <%= admins[i].name %>
+                                        </option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Update Laboratory
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer'); -%>

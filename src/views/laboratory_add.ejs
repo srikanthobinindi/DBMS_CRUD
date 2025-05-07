@@ -1,0 +1,52 @@
+<%- include('partials/_header'); -%>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Add New Laboratory</h2>
+            <a href="/laboratories" class="btn btn-secondary mb-3">Back to Laboratories</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/laboratories/add" method="post">
+                        <div class="form-group">
+                            <label for="lab_id">Laboratory ID</label>
+                            <input type="number" name="lab_id" placeholder="Laboratory ID" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lab_name">Laboratory Name</label>
+                            <input type="text" name="lab_name" placeholder="Laboratory Name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="technician">Technician</label>
+                            <input type="text" name="technician" placeholder="Technician Name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" placeholder="Email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin_id">Admin</label>
+                            <select name="admin_id" class="form-control">
+                                <option value="">-- Select Admin --</option>
+                                <% if (admins) { %>
+                                    <% for (var i = 0; i < admins.length; i++) { %>
+                                        <option value="<%= admins[i].admin_id %>"><%= admins[i].name %></option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Save Laboratory
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer'); -%>

@@ -1,0 +1,56 @@
+<%- include('partials/_header'); -%>
+
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Add New Doctor</h2>
+            <a href="/doctors" class="btn btn-secondary mb-3">Back to Doctors</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <form action="/doctors/add" method="post">
+                        <div class="form-group">
+                            <label for="doctor_id">Doctor ID</label>
+                            <input type="number" name="doctor_id" placeholder="Doctor ID" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" placeholder="Name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="specialization">Specialization</label>
+                            <input type="text" name="specialization" placeholder="Specialization" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" name="phone" placeholder="Phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" placeholder="Email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="admin_id">Admin</label>
+                            <select name="admin_id" class="form-control">
+                                <option value="">-- Select Admin --</option>
+                                <% if (admins) { %>
+                                    <% for (var i = 0; i < admins.length; i++) { %>
+                                        <option value="<%= admins[i].admin_id %>"><%= admins[i].name %></option>
+                                    <% } %>
+                                <% } %>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Save Doctor
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer'); -%>

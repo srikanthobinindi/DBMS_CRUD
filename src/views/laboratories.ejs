@@ -1,0 +1,54 @@
+<%- include('partials/_header'); -%>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h2>Laboratory Management</h2>
+            <a href="/" class="btn btn-secondary mb-3">Back to Home</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Lab Name</th>
+                        <th>Technician</th>
+                        <th>Email</th>
+                        <th>Admin</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (data) { %>
+                        <% for (var i = 0; i < data.length; i++) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= data[i].lab_name %></td>
+                                <td><%= data[i].technician %></td>
+                                <td><%= data[i].email %></td>
+                                <td><%= data[i].admin_name || 'None' %></td>
+                                <td>
+                                    <a href="/laboratories/delete/<%= data[i].lab_id %>" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="/laboratories/update/<%= data[i].lab_id %>" class="btn btn-info btn-sm">Update</a>
+                                    <a href="/laboratories/patients/<%= data[i].lab_id %>" class="btn btn-success btn-sm">Patients</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Add New Laboratory</h3>
+                    <a href="/laboratories/add" class="btn btn-primary mb-3">Add New Laboratory</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer'); -%>

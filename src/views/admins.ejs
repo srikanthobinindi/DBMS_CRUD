@@ -1,0 +1,84 @@
+<%- include('partials/_header'); -%>
+
+<div class="container">
+    <div class="row mt-5">
+        <div class="col-md-12">
+            <h2>Admin Management</h2>
+            <a href="/" class="btn btn-secondary mb-3">Back to Home</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-7">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Staff Count</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (data) { %>
+                        <% for (var i = 0; i < data.length; i++) { %>
+                            <tr>
+                                <td><%= (i + 1) %></td>
+                                <td><%= data[i].admin_name %></td>
+                                <td><%= data[i].email %></td>
+                                <td><%= data[i].phone %></td>
+                                <td>
+                                    D: <%= data[i].doctor_count %>, 
+                                    N: <%= data[i].nurse_count %>, 
+                                    L: <%= data[i].lab_count %>, 
+                                    P: <%= data[i].pharmacist_count %>, 
+                                    A: <%= data[i].accountant_count %>
+                                </td>
+                                <td>
+                                    <a href="/admins/delete/<%= data[i].admin_id %>" class="btn btn-danger btn-sm">Delete</a>
+                                    <a href="/admins/update/<%= data[i].admin_id %>" class="btn btn-info btn-sm">Update</a>
+                                    <a href="/admins/staff/<%= data[i].admin_id %>" class="btn btn-success btn-sm">View Staff</a>
+                                </td>
+                            </tr>
+                        <% } %>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">Add New Admin</h3>
+                    <form action="/admins/add" method="post">
+                        <div class="form-group">
+                            <label for="admin_id">Admin ID</label>
+                            <input type="number" name="admin_id" placeholder="Admin ID" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" name="name" placeholder="Name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" name="email" placeholder="Email" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="text" name="phone" placeholder="Phone" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" name="password" placeholder="Password" class="form-control" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            Save Admin
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('partials/_footer'); -%>
